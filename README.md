@@ -1,5 +1,8 @@
 # Kubernetes GitOps Delivery Platform
 
+[![CI](https://github.com/L3xcy/kubernetes-gitops-delivery-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/L3xcy/kubernetes-gitops-delivery-platform/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Kubernetes GitOps Delivery Platform is an isolated platform-engineering lab that builds, validates, and promotes an observable service through local, development, and production-style Kubernetes environments with Helm, Argo CD, Podman, Kind, and GitHub Actions.
 
 It demonstrates the complete delivery path rather than presenting a repository of disconnected YAML files: tested application code, a hardened container, environment-aware Helm packaging, Git-based promotion and rollback, restricted Argo CD applications, and automated validation.
