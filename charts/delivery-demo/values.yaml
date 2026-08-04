@@ -1,0 +1,80 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/l3xcy/kubernetes-gitops-delivery-platform
+  pullPolicy: IfNotPresent
+  tag: "0.1.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: /metrics
+  prometheus.io/port: "8080"
+
+podLabels: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 10001
+  runAsGroup: 10001
+  fsGroup: 10001
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 10001
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+application:
+  environment: local
+  releaseColor: blue
+  commitSha: unknown
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 250m
+    memory: 192Mi
+
+probes:
+  liveness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readiness:
+    initialDelaySeconds: 2
+    periodSeconds: 5
+
+networkPolicy:
+  enabled: true
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+serviceMonitor:
+  enabled: false
+  interval: 30s
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

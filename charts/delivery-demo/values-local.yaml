@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: localhost/gitops-delivery-demo
+  tag: dev
+  pullPolicy: Never
+
+application:
+  environment: local-kind
+  releaseColor: blue
+
+networkPolicy:
+  enabled: false
+
+podDisruptionBudget:
+  enabled: false

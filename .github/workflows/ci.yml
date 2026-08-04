@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  application:
+    name: Application tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Lint
+        run: ruff check .
+      - name: Test
+        run: pytest -q
+
+  helm:
+    name: Helm validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+        with:
+          version: v4.1.4
+      - name: Lint and render chart
+        run: |
+          helm lint charts/delivery-demo
+          helm lint charts/delivery-demo --values charts/delivery-demo/values-dev.yaml
+          helm lint charts/delivery-demo --values charts/delivery-demo/values-prod.yaml
+          scripts/validate-rendered.sh
+
+  container:
+    name: Container build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build --tag gitops-delivery-demo:ci .

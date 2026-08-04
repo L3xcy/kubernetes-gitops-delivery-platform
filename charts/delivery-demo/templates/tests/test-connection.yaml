@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "delivery-demo.fullname" . }}-test-connection"
+  labels:
+    {{- include "delivery-demo.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  automountServiceAccountToken: false
+  restartPolicy: Never
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: wget
+      image: busybox:1.37
+      command: ["wget"]
+      args: ["{{ include "delivery-demo.fullname" . }}:{{ .Values.service.port }}/health/ready", "-qO-"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]

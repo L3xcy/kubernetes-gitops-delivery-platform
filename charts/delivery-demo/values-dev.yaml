@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  tag: main
+
+application:
+  environment: development
+  releaseColor: blue
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 48Mi
+  limits:
+    cpu: 150m
+    memory: 128Mi
+
+podDisruptionBudget:
+  enabled: false

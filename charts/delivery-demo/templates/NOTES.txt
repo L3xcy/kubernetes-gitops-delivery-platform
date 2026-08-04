@@ -1,0 +1,9 @@
+1. Verify the workload using the project-owned kubeconfig:
+
+  kubectl --kubeconfig .local/kubeconfig --context kind-gitops-delivery \
+    -n {{ .Release.Namespace }} get pods
+
+2. Access the service locally:
+
+  kubectl --kubeconfig .local/kubeconfig --context kind-gitops-delivery \
+    -n {{ .Release.Namespace }} port-forward service/{{ include "delivery-demo.fullname" . }} 8080:{{ .Values.service.port }}

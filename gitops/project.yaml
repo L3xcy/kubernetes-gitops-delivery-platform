@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: delivery-platform
+  namespace: argocd
+spec:
+  description: Restricted project for the local GitOps delivery portfolio lab
+  sourceRepos:
+    - https://github.com/L3xcy/kubernetes-gitops-delivery-platform.git
+  destinations:
+    - namespace: delivery-dev
+      server: https://kubernetes.default.svc
+    - namespace: delivery-prod
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceBlacklist:
+    - group: ""
+      kind: Secret

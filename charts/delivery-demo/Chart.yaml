@@ -1,0 +1,11 @@
+apiVersion: v2
+name: delivery-demo
+description: Observable FastAPI service for demonstrating Kubernetes GitOps delivery
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/L3xcy/kubernetes-gitops-delivery-platform
+sources:
+  - https://github.com/L3xcy/kubernetes-gitops-delivery-platform
+maintainers:
+  - name: Xiaoyan Li
