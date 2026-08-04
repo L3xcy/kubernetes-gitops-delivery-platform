@@ -67,6 +67,16 @@ make image
 
 These commands run application tests, lint Python, validate all Helm value sets, render both GitOps environments, check workload security controls, and build the container image.
 
+## Published image
+
+Release tags publish a public multi-architecture image to GitHub Container Registry:
+
+```bash
+podman pull ghcr.io/l3xcy/kubernetes-gitops-delivery-platform:v0.1.0
+```
+
+The `v0.1.0` manifest supports both `linux/amd64` and `linux/arm64`. The production Helm values reference this immutable tag.
+
 ## Create the isolated local cluster
 
 > Do not use an unqualified `kubectl` command on a workstation that accesses other clusters.
